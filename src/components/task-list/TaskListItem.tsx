@@ -1,9 +1,11 @@
-import { TASK_PROGRESS_ID, TASK_PROGRESS_STATUS } from '@/constants'
+import { TASK_MODAL_TYPE, TASK_PROGRESS_ID, TASK_PROGRESS_STATUS } from '@/constants'
 import { tasksState } from '@/features/taskAtoms'
 import { useTasksAction } from '@/hooks/useTasksAction'
 import type { CSSProperties, Task } from '@/types'
-import React from 'react'
+import React, { useState } from 'react'
 import { useRecoilState } from 'recoil'
+import TaskMenu from '../TaskMenu'
+import TaskModal from '../TaskModal'
 
 interface TaskListItemProps {
   task: Task
@@ -41,7 +43,9 @@ const getIconStyle = (progressOrder: number): React.CSSProperties => {
 
 const TaskListItem = ({ task }: TaskListItemProps): JSX.Element => {
 
-  const { completeTask } = useTasksAction()
+  const { completeTask, deleteTask } = useTasksAction()
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 
   return (
     <div style={styles.tableBody}>
@@ -55,10 +59,24 @@ const TaskListItem = ({ task }: TaskListItemProps): JSX.Element => {
       <div style={styles.tableBodyDueDate}>{task.dueDate}</div>
       <div style={styles.tableBodyprogress}>{getProgressCategory(task.progressOrder)}</div>
       <div>
-        <span className="material-icons" style={styles.menuIcon}>
+        <span className="material-icons" style={styles.menuIcon} onClick={(): void => {
+          setIsMenuOpen(true) // Ditambahkan
+        }}>
           more_horiz
         </span>
       </div>
+      {isMenuOpen && <TaskMenu setIsMenuOpen={setIsMenuOpen} setIsModalOpen={setIsModalOpen} deleteTask={() => {
+        deleteTask(task.id)
+        setIsMenuOpen(false)
+      }} />}
+      {isModalOpen && (
+        <TaskModal
+          headingTitle="Edit your task"
+          setIsModalOpen={setIsModalOpen}
+          task={task}
+          type={TASK_MODAL_TYPE.EDIT}
+        />
+      )}
     </div>
   )
 }

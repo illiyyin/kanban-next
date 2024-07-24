@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import type { Task, CSSProperties } from '@/types'
-import { TASK_PROGRESS_ID } from '@/constants'
+import { TASK_MODAL_TYPE, TASK_PROGRESS_ID } from '@/constants'
 import { useTasksAction } from '@/hooks/useTasksAction'
+import TaskMenu from '../TaskMenu'
+import TaskModal from '../TaskModal'
 
 interface TaskCardProps {
   task: Task
@@ -31,8 +33,9 @@ const getIconStyle = (progressOrder: number): React.CSSProperties => {
 }
 
 const TaskCard = ({ task }: TaskCardProps): JSX.Element => {
-
-  const { completeTask, moveTaskCard } = useTasksAction()
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const { completeTask, moveTaskCard,deleteTask } = useTasksAction()
 
   return (
     <div style={styles.taskCard}>
@@ -40,7 +43,9 @@ const TaskCard = ({ task }: TaskCardProps): JSX.Element => {
         <div className="material-icons" style={getIconStyle(task.progressOrder)} onClick={(): void => {
           completeTask(task.id) // Ditambahkan
         }}>check_circle</div>
-        <div className="material-icons" style={styles.menuIcon}>
+        <div className="material-icons" style={styles.menuIcon} onClick={(): void => {
+          setIsMenuOpen(true) // Ditambahkan
+        }}>
           more_vert
         </div>
       </div>
@@ -63,6 +68,18 @@ const TaskCard = ({ task }: TaskCardProps): JSX.Element => {
           }}>chevron_right</button>
         )}
       </div>
+      {isMenuOpen && <TaskMenu setIsMenuOpen={setIsMenuOpen} setIsModalOpen={setIsModalOpen} deleteTask={() => {
+        deleteTask(task.id)
+        setIsMenuOpen(false)
+      }} />}
+      {isModalOpen && (
+        <TaskModal
+          headingTitle="Edit your task"
+          setIsModalOpen={setIsModalOpen}
+          task={task}
+          type={TASK_MODAL_TYPE.EDIT}
+        />
+      )}
     </div>
   )
 }
