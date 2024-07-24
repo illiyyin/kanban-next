@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import Link from 'next/link'
 import type { CSSProperties } from '@/types'
 import { usePathname } from 'next/navigation'
@@ -7,19 +7,13 @@ const SideMenu = (): JSX.Element => {
   const pathname = usePathname()
   return (
     <div style={styles.container}>
-      <Link
-        href="/"
-        style={pathname === "/" ? styles.activeLink : styles.link}
-      >
+      <Link href="/" style={pathname === '/' ? styles.activeLink : styles.link}>
         <span className="material-icons" style={styles.icon}>
           home
         </span>
         <p style={styles.text}>Home</p>
       </Link>
-      <Link
-        href="/task-list"
-        style={pathname === "/task-list" ? styles.activeLink : styles.link}
-      >
+      <Link href="/task-list" style={pathname === '/task-list' ? styles.activeLink : styles.link}>
         <span className="material-icons" style={styles.icon}>
           list
         </span>
@@ -27,7 +21,7 @@ const SideMenu = (): JSX.Element => {
       </Link>
       <Link
         href="/task-progress"
-        style={pathname === "/task-progress" ? styles.activeLink : styles.link}
+        style={pathname === '/task-progress' ? styles.activeLink : styles.link}
       >
         <span className="material-icons" style={styles.icon}>
           check_box

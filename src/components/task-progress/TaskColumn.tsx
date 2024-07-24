@@ -16,9 +16,13 @@ const TaskColumn = ({ columnTitle, tasks, columnId }: TaskColumnProps): JSX.Elem
     <div style={styles.categoryColumn}>
       <div style={styles.columnTitleWrapper}>
         <h2 style={styles.categoryTitle}>{columnTitle}</h2>
-        <div className="material-icons" style={styles.plusIcon} onClick={(): void => {
-          setIsModalOpen(true) // Ditambahkan
-        }}>
+        <div
+          className="material-icons"
+          style={styles.plusIcon}
+          onClick={(): void => {
+            setIsModalOpen(true) // Ditambahkan
+          }}
+        >
           add
         </div>
       </div>

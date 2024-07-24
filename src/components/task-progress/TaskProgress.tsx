@@ -1,5 +1,10 @@
-"use client"
-import { completedTasksSelector, inProgressTasksSelector, notStartedTasksSelector, waitingTasksSelector } from '@/features/taskSelector'
+'use client'
+import {
+  completedTasksSelector,
+  inProgressTasksSelector,
+  notStartedTasksSelector,
+  waitingTasksSelector,
+} from '@/features/taskSelector'
 import type { CSSProperties, Task } from '@/types'
 import React from 'react'
 import { useRecoilValue } from 'recoil'

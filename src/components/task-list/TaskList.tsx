@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import { tasksState } from '@/features/taskAtoms'
 import type { CSSProperties, Task } from '@/types'
 import React, { useState } from 'react'
@@ -15,10 +15,13 @@ const TaskList = (): JSX.Element => {
     <div style={styles.container}>
       <h1 style={styles.heading}>Your Tasks</h1>
       <div style={styles.taskButtons}>
-        <button style={styles.button} onClick={(): void => {
-          setIsModalOpen(true) // Ditambahkan
-        }}>
-          <span className="material-icons" >add</span>Add task
+        <button
+          style={styles.button}
+          onClick={(): void => {
+            setIsModalOpen(true) // Ditambahkan
+          }}
+        >
+          <span className="material-icons">add</span>Add task
         </button>
         <button style={styles.button}>
           <span className="material-icons">sort</span>Filter tasks
@@ -68,7 +71,7 @@ const styles: CSSProperties = {
     display: 'flex',
     alignItems: 'center',
     backgroundColor: '#55ACC8',
-    color: 'white'
+    color: 'white',
   },
   tableHead: {
     display: 'flex',

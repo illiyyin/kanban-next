@@ -42,7 +42,6 @@ const getIconStyle = (progressOrder: number): React.CSSProperties => {
 }
 
 const TaskListItem = ({ task }: TaskListItemProps): JSX.Element => {
-
   const { completeTask, deleteTask } = useTasksAction()
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
@@ -50,25 +49,41 @@ const TaskListItem = ({ task }: TaskListItemProps): JSX.Element => {
   return (
     <div style={styles.tableBody}>
       <div style={styles.tableBodyTaskTitle}>
-        <span className="material-icons" style={getIconStyle(task.progressOrder)} onClick={(): void => {
-          completeTask(task.id) // Ditambahkan
-        }}>check_circle</span>
+        <span
+          className="material-icons"
+          style={getIconStyle(task.progressOrder)}
+          onClick={(): void => {
+            completeTask(task.id) // Ditambahkan
+          }}
+        >
+          check_circle
+        </span>
         {task.title}
       </div>
       <div style={styles.tableBodyDetail}>{task.detail}</div>
       <div style={styles.tableBodyDueDate}>{task.dueDate}</div>
       <div style={styles.tableBodyprogress}>{getProgressCategory(task.progressOrder)}</div>
       <div>
-        <span className="material-icons" style={styles.menuIcon} onClick={(): void => {
-          setIsMenuOpen(true) // Ditambahkan
-        }}>
+        <span
+          className="material-icons"
+          style={styles.menuIcon}
+          onClick={(): void => {
+            setIsMenuOpen(true) // Ditambahkan
+          }}
+        >
           more_horiz
         </span>
       </div>
-      {isMenuOpen && <TaskMenu setIsMenuOpen={setIsMenuOpen} setIsModalOpen={setIsModalOpen} deleteTask={() => {
-        deleteTask(task.id)
-        setIsMenuOpen(false)
-      }} />}
+      {isMenuOpen && (
+        <TaskMenu
+          setIsMenuOpen={setIsMenuOpen}
+          setIsModalOpen={setIsModalOpen}
+          deleteTask={() => {
+            deleteTask(task.id)
+            setIsMenuOpen(false)
+          }}
+        />
+      )}
       {isModalOpen && (
         <TaskModal
           headingTitle="Edit your task"

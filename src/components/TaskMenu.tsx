@@ -8,16 +8,19 @@ import { useTasksAction } from '@/hooks/useTasksAction'
 interface TaskMenuProps {
   setIsMenuOpen: Dispatch<SetStateAction<boolean>>
   setIsModalOpen: Dispatch<SetStateAction<boolean>>
-  deleteTask:()=>void
+  deleteTask: () => void
 }
 
-const TaskMenu = ({ setIsMenuOpen, setIsModalOpen,deleteTask }: TaskMenuProps): JSX.Element => {
+const TaskMenu = ({ setIsMenuOpen, setIsModalOpen, deleteTask }: TaskMenuProps): JSX.Element => {
   return (
     <div style={styles.menu}>
-      <div style={styles.menuItem} onClick={() => {
-        setIsModalOpen(true)
-        setIsMenuOpen(false)
-      }}>
+      <div
+        style={styles.menuItem}
+        onClick={() => {
+          setIsModalOpen(true)
+          setIsMenuOpen(false)
+        }}
+      >
         <span className="material-icons">edit</span>Edit
       </div>
       <div style={styles.menuItem} onClick={deleteTask}>
@@ -32,7 +35,6 @@ const TaskMenu = ({ setIsMenuOpen, setIsModalOpen,deleteTask }: TaskMenuProps): 
       >
         close
       </span>
-      
     </div>
   )
 }

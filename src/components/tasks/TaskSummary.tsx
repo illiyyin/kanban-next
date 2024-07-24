@@ -1,16 +1,13 @@
-"use client"
+'use client'
 import { useRecoilValue } from 'recoil'
-import { tasksState } from '@/features/taskAtoms'
 import type { Task, CSSProperties } from '@/types'
 import { completedTasksSelector, uncompletedTasksSelector } from '@/features/taskSelector'
 import Link from 'next/link'
 
 const TaskSummary = (): JSX.Element => {
-  const completedTasks =
-    useRecoilValue<Task[]>(completedTasksSelector)
+  const completedTasks = useRecoilValue<Task[]>(completedTasksSelector)
 
-  const uncompletedTasks =
-    useRecoilValue<Task[]>(uncompletedTasksSelector)
+  const uncompletedTasks = useRecoilValue<Task[]>(uncompletedTasksSelector)
 
   return (
     <div style={styles.container}>
@@ -19,15 +16,14 @@ const TaskSummary = (): JSX.Element => {
       <div style={styles.list}>
         <span className="material-icons">check_circle</span>
         <h2>
-          You have completed {completedTasks.length}{' '}
-          {completedTasks.length <= 1 ? 'task' : 'tasks'}
+          You have completed {completedTasks.length} {completedTasks.length <= 1 ? 'task' : 'tasks'}
         </h2>
       </div>
       <div style={styles.list}>
         <span className="material-icons">list</span>
         <h2>
-          You still have {uncompletedTasks.length}{' '}
-          {uncompletedTasks.length <= 1 ? 'task' : 'tasks'} left
+          You still have {uncompletedTasks.length} {uncompletedTasks.length <= 1 ? 'task' : 'tasks'}{' '}
+          left
         </h2>
       </div>
       <div style={styles.links}>
@@ -45,13 +41,13 @@ const TaskSummary = (): JSX.Element => {
 const styles: CSSProperties = {
   container: {
     padding: '40px',
-    width: '100%'
+    width: '100%',
   },
   heading: {
     color: '#55C89F',
     marginBottom: '60px',
     fontSize: '32px',
-    fontWeight: 700
+    fontWeight: 700,
   },
   list: {
     color: '#fff',
@@ -62,7 +58,7 @@ const styles: CSSProperties = {
     marginBottom: '40px',
     padding: '20px',
     width: '100%',
-    columnGap: '8px'
+    columnGap: '8px',
   },
   links: {
     display: 'flex',

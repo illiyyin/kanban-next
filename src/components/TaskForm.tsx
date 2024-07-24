@@ -1,9 +1,5 @@
 import React, { Dispatch, SetStateAction, useState } from 'react'
-import {
-  TASK_MODAL_TYPE,
-  TASK_PROGRESS_ID,
-  TASK_PROGRESS_STATUS,
-} from '@/constants'
+import { TASK_MODAL_TYPE, TASK_PROGRESS_ID, TASK_PROGRESS_STATUS } from '@/constants'
 import type { CSSProperties, Task } from '@/types'
 import { useTasksAction } from '@/hooks/useTasksAction'
 
@@ -14,13 +10,17 @@ interface TaskFormProps {
   task: Task
 }
 
-
-const TaskForm = ({ defaultProgressOrder, type, setIsModalOpen, task }: TaskFormProps): JSX.Element => {
+const TaskForm = ({
+  defaultProgressOrder,
+  type,
+  setIsModalOpen,
+  task,
+}: TaskFormProps): JSX.Element => {
   const [title, setTitle] = useState<string>(task?.title || '')
   const [detail, setDetail] = useState<string>(task?.detail || '')
   const [dueDate, setDueDate] = useState<string>(task?.dueDate || '')
   const [progressOrder, setProgressOrder] = useState<number>(
-    task?.progressOrder || defaultProgressOrder
+    task?.progressOrder || defaultProgressOrder,
   )
 
   const { addTask, editTask } = useTasksAction()
@@ -80,23 +80,19 @@ const TaskForm = ({ defaultProgressOrder, type, setIsModalOpen, task }: TaskForm
             setProgressOrder(Number(e.target.value))
           }}
         >
-          <option value={TASK_PROGRESS_ID.NOT_STARTED}>
-            {TASK_PROGRESS_STATUS.NOT_STARTED}
-          </option>
-          <option value={TASK_PROGRESS_ID.IN_PROGRESS}>
-            {TASK_PROGRESS_STATUS.IN_PROGRESS}
-          </option>
-          <option value={TASK_PROGRESS_ID.WAITING}>
-            {TASK_PROGRESS_STATUS.WAITING}
-          </option>
-          <option value={TASK_PROGRESS_ID.COMPLETED}>
-            {TASK_PROGRESS_STATUS.COMPLETED}
-          </option>
+          <option value={TASK_PROGRESS_ID.NOT_STARTED}>{TASK_PROGRESS_STATUS.NOT_STARTED}</option>
+          <option value={TASK_PROGRESS_ID.IN_PROGRESS}>{TASK_PROGRESS_STATUS.IN_PROGRESS}</option>
+          <option value={TASK_PROGRESS_ID.WAITING}>{TASK_PROGRESS_STATUS.WAITING}</option>
+          <option value={TASK_PROGRESS_ID.COMPLETED}>{TASK_PROGRESS_STATUS.COMPLETED}</option>
         </select>
       </div>
-      <button type="button" style={styles.button} onClick={(): void => {
-        handleSubmit() // Ditambahkan
-      }}>
+      <button
+        type="button"
+        style={styles.button}
+        onClick={(): void => {
+          handleSubmit() // Ditambahkan
+        }}
+      >
         Submit
       </button>
     </form>
@@ -116,12 +112,12 @@ const styles: CSSProperties = {
   formInput: {
     height: '40px',
     fontSize: '20px',
-    border: '1px solid black'
+    border: '1px solid black',
   },
   formTextArea: {
     height: '80px',
     fontSize: '20px',
-    border: '1px solid black'
+    border: '1px solid black',
   },
   button: {
     backgroundColor: '#55C89F',

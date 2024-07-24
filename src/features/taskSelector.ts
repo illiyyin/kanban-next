@@ -12,7 +12,6 @@ export const uncompletedTasksSelector = selector<Task[]>({
   },
 })
 
-
 export const notStartedTasksSelector = selector<Task[]>({
   key: SelectorKeys.NOT_STARTED_TASKS,
   get: ({ get }) => {

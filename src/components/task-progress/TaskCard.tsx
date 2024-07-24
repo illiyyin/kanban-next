@@ -35,17 +35,27 @@ const getIconStyle = (progressOrder: number): React.CSSProperties => {
 const TaskCard = ({ task }: TaskCardProps): JSX.Element => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-  const { completeTask, moveTaskCard,deleteTask } = useTasksAction()
+  const { completeTask, moveTaskCard, deleteTask } = useTasksAction()
 
   return (
     <div style={styles.taskCard}>
       <div style={styles.taskIcons}>
-        <div className="material-icons" style={getIconStyle(task.progressOrder)} onClick={(): void => {
-          completeTask(task.id) // Ditambahkan
-        }}>check_circle</div>
-        <div className="material-icons" style={styles.menuIcon} onClick={(): void => {
-          setIsMenuOpen(true) // Ditambahkan
-        }}>
+        <div
+          className="material-icons"
+          style={getIconStyle(task.progressOrder)}
+          onClick={(): void => {
+            completeTask(task.id) // Ditambahkan
+          }}
+        >
+          check_circle
+        </div>
+        <div
+          className="material-icons"
+          style={styles.menuIcon}
+          onClick={(): void => {
+            setIsMenuOpen(true) // Ditambahkan
+          }}
+        >
           more_vert
         </div>
       </div>
@@ -58,20 +68,36 @@ const TaskCard = ({ task }: TaskCardProps): JSX.Element => {
       </div>
       <div style={getArrowPositionStyle(task.progressOrder)}>
         {task.progressOrder !== TASK_PROGRESS_ID.NOT_STARTED && (
-          <button className="material-icons" onClick={(): void => {
-            moveTaskCard(task.id, -1) // Ditambahkan
-          }}>chevron_left</button>
+          <button
+            className="material-icons"
+            onClick={(): void => {
+              moveTaskCard(task.id, -1) // Ditambahkan
+            }}
+          >
+            chevron_left
+          </button>
         )}
         {task.progressOrder !== TASK_PROGRESS_ID.COMPLETED && (
-          <button className="material-icons" onClick={(): void => {
-            moveTaskCard(task.id, 1) // Ditambahkan
-          }}>chevron_right</button>
+          <button
+            className="material-icons"
+            onClick={(): void => {
+              moveTaskCard(task.id, 1) // Ditambahkan
+            }}
+          >
+            chevron_right
+          </button>
         )}
       </div>
-      {isMenuOpen && <TaskMenu setIsMenuOpen={setIsMenuOpen} setIsModalOpen={setIsModalOpen} deleteTask={() => {
-        deleteTask(task.id)
-        setIsMenuOpen(false)
-      }} />}
+      {isMenuOpen && (
+        <TaskMenu
+          setIsMenuOpen={setIsMenuOpen}
+          setIsModalOpen={setIsModalOpen}
+          deleteTask={() => {
+            deleteTask(task.id)
+            setIsMenuOpen(false)
+          }}
+        />
+      )}
       {isModalOpen && (
         <TaskModal
           headingTitle="Edit your task"
