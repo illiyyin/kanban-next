@@ -1,5 +1,5 @@
 import { Inter } from 'next/font/google'
-import '../../app/globals.css'
+import '@/app/globals.css'
 import SideMenu from '@/components/SideMenu'
 import RecoilProvider from '@/components/RecoilProvider'
 
@@ -12,6 +12,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      {/* Ditambahkan */}
       <head>
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
       </head>

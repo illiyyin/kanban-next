@@ -10,13 +10,13 @@ const TaskSummary = (): JSX.Element => {
   const uncompletedTasks = useRecoilValue<Task[]>(uncompletedTasksSelector)
 
   return (
-    <div style={styles.container}>
-      <h1 style={styles.heading}>Summary of Your Tasks</h1>
+    <div className="w-full p-10">
+      <h1 className="text-green-400 mb-16 font-bold text-3xl">Summary of Your Tasks</h1>
       {/* Diperbarui */}
       <div style={styles.list}>
         <span className="material-icons">check_circle</span>
         <h2>
-          You have completed {completedTasks.length} {completedTasks.length <= 1 ? 'task' : 'tasks'}
+          You have completed {completedTasks.length} {completedTasks.length <= 1 ? "task" : 'tasks'}
         </h2>
       </div>
       <div style={styles.list}>
@@ -39,16 +39,6 @@ const TaskSummary = (): JSX.Element => {
 }
 
 const styles: CSSProperties = {
-  container: {
-    padding: '40px',
-    width: '100%',
-  },
-  heading: {
-    color: '#55C89F',
-    marginBottom: '60px',
-    fontSize: '32px',
-    fontWeight: 700,
-  },
   list: {
     color: '#fff',
     backgroundColor: '#55C89F',
