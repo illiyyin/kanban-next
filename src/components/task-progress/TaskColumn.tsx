@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import TaskCard from './TaskCard'
-import type { Task, CSSProperties } from '@/types'
+import type { Task, } from '@/types'
 import TaskModal from '../TaskModal'
-import { TASK_MODAL_TYPE, TASK_PROGRESS_ID } from '@/constants'
+import { TASK_MODAL_TYPE } from '@/constants'
 
 interface TaskColumnProps {
   columnTitle: string
@@ -13,12 +13,11 @@ interface TaskColumnProps {
 const TaskColumn = ({ columnTitle, tasks, columnId }: TaskColumnProps): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   return (
-    <div style={styles.categoryColumn}>
-      <div style={styles.columnTitleWrapper}>
-        <h2 style={styles.categoryTitle}>{columnTitle}</h2>
+    <div className='max-w-[400px]'>
+      <div className='flex justify-between items-center p-1'>
+        <h2 className='font-bold text-xl'>{columnTitle}</h2>
         <div
-          className="material-icons"
-          style={styles.plusIcon}
+          className="material-icons cursor-pointer"
           onClick={(): void => {
             setIsModalOpen(true) // Ditambahkan
           }}
@@ -41,21 +40,6 @@ const TaskColumn = ({ columnTitle, tasks, columnId }: TaskColumnProps): JSX.Elem
       )}
     </div>
   )
-}
-
-const styles: CSSProperties = {
-  plusIcon: {
-    cursor: 'pointer',
-  },
-  categoryColumn: {
-    width: '22%',
-  },
-  columnTitleWrapper: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '0 4px',
-  },
 }
 
 export default TaskColumn

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import type { Task, CSSProperties } from '@/types'
+import type { Task } from '@/types'
 import { TASK_MODAL_TYPE, TASK_PROGRESS_ID } from '@/constants'
 import { useTasksAction } from '@/hooks/useTasksAction'
 import TaskMenu from '../TaskMenu'
@@ -9,49 +9,34 @@ interface TaskCardProps {
   task: Task
 }
 
-const getArrowPositionStyle = (progressOrder: number): React.CSSProperties => {
-  const justifyContentValue: 'flex-end' | 'space-between' =
-    progressOrder === TASK_PROGRESS_ID.NOT_STARTED ? 'flex-end' : 'space-between'
-  return {
-    display: 'flex',
-    justifyContent: justifyContentValue,
-  }
-}
-
-const getIconStyle = (progressOrder: number): React.CSSProperties => {
-  const color: '#55C89F' | '#C5C5C5' =
-    progressOrder === TASK_PROGRESS_ID.COMPLETED ? '#55C89F' : '#C5C5C5'
-
-  const cursor: 'default' | 'pointer' =
-    progressOrder === TASK_PROGRESS_ID.COMPLETED ? 'default' : 'pointer'
-
-  return {
-    color,
-    cursor,
-    fontSize: '28px',
-  }
-}
-
 const TaskCard = ({ task }: TaskCardProps): JSX.Element => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const { completeTask, moveTaskCard, deleteTask } = useTasksAction()
 
+  const isStarted = task.progressOrder === TASK_PROGRESS_ID.NOT_STARTED
+
+  const IconStyle = () => {
+    const isProgressCompleted = task.progressOrder === TASK_PROGRESS_ID.COMPLETED
+
+    return (
+      <span
+        className={`material-icons mr-4 text-3xl ${isProgressCompleted ? 'text-green-500 cursor-default' : 'text-gray-400 cursor-pointer'}`}
+        onClick={(): void => {
+          completeTask(task.id) // Ditambahkan
+        }}
+      >
+        check_circle
+      </span>
+    )
+  }
+
   return (
-    <div style={styles.taskCard}>
-      <div style={styles.taskIcons}>
+    <div className="bg-green-200 p-6 rounded-xl my-2 flex flex-col gap-y-2 text-xl">
+      <div className="flex justify-between">
+        <IconStyle />
         <div
-          className="material-icons"
-          style={getIconStyle(task.progressOrder)}
-          onClick={(): void => {
-            completeTask(task.id) // Ditambahkan
-          }}
-        >
-          check_circle
-        </div>
-        <div
-          className="material-icons"
-          style={styles.menuIcon}
+          className="material-icons cursor-pointer"
           onClick={(): void => {
             setIsMenuOpen(true) // Ditambahkan
           }}
@@ -59,14 +44,14 @@ const TaskCard = ({ task }: TaskCardProps): JSX.Element => {
           more_vert
         </div>
       </div>
-      <p style={styles.taskTitle}>{task.title}</p>
+      <p className="text-3xl font-medium mt-2">{task.title}</p>
       <div>
         <p>{task.detail}</p>
       </div>
       <div>
         <p>Due on {task.dueDate}</p>
       </div>
-      <div style={getArrowPositionStyle(task.progressOrder)}>
+      <div className={`flex ${isStarted ? 'justify-end' : 'justify-between'}`}>
         {task.progressOrder !== TASK_PROGRESS_ID.NOT_STARTED && (
           <button
             className="material-icons"
@@ -108,32 +93,6 @@ const TaskCard = ({ task }: TaskCardProps): JSX.Element => {
       )}
     </div>
   )
-}
-
-const styles: CSSProperties = {
-  taskCard: {
-    backgroundColor: '#C7EFD0',
-    borderRadius: '12px',
-    padding: '24px',
-    margin: '12px 0',
-    fontSize: '20px',
-    overflowWrap: 'anywhere',
-    position: 'relative',
-  },
-  taskIcons: {
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
-  menuIcon: {
-    cursor: 'pointer',
-  },
-  taskTitle: {
-    fontSize: '30px',
-  },
-  arrowsContainer: {
-    display: 'flex',
-    justifyContent: 'space-between',
-  },
 }
 
 export default TaskCard

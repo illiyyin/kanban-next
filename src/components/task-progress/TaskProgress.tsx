@@ -5,7 +5,7 @@ import {
   notStartedTasksSelector,
   waitingTasksSelector,
 } from '@/features/taskSelector'
-import type { CSSProperties, Task } from '@/types'
+import type { Task } from '@/types'
 import React from 'react'
 import { useRecoilValue } from 'recoil'
 import TaskColumn from './TaskColumn'
@@ -21,9 +21,9 @@ const TaskProgress = (): JSX.Element => {
   const completedTasks: Task[] = useRecoilValue(completedTasksSelector)
 
   return (
-    <div style={styles.container}>
-      <h1 style={styles.heading}>Task Progress</h1>
-      <div style={styles.taskCategories}>
+    <div className="w-full p-10">
+      <h1 className="text-green-500 mb-16 font-bold text-3xl">Task Progress</h1>
+      <div className='grid grid-cols-4 gap-x-4'>
         <TaskColumn
           columnId={TASK_PROGRESS_ID.NOT_STARTED}
           columnTitle={TASK_PROGRESS_STATUS.NOT_STARTED}
@@ -47,20 +47,6 @@ const TaskProgress = (): JSX.Element => {
       </div>
     </div>
   )
-}
-
-const styles: CSSProperties = {
-  container: {
-    padding: '20px',
-  },
-  heading: {
-    color: '#55C89F',
-    marginBottom: '60px',
-  },
-  taskCategories: {
-    display: 'flex',
-    justifyContent: 'space-around',
-  },
 }
 
 export default TaskProgress
