@@ -1,21 +1,16 @@
 import React, { Dispatch, SetStateAction, useState } from 'react'
-import { TASK_MODAL_TYPE, TASK_PROGRESS_ID, TASK_PROGRESS_STATUS } from '@/constants'
-import type { CSSProperties, Task } from '@/types'
+import { MODAL_TYPE, TASK_MODAL_TYPE, TASK_PROGRESS_ID, TASK_PROGRESS_STATUS } from '@/constants'
+import type { Task } from '@/types'
 import { useTasksAction } from '@/hooks/useTasksAction'
+import { useMenu } from '@/hooks/useMenu'
 
 interface TaskFormProps {
   defaultProgressOrder: number
   type: string
-  setIsModalOpen: Dispatch<SetStateAction<boolean>>
   task: Task
 }
 
-const TaskForm = ({
-  defaultProgressOrder,
-  type,
-  setIsModalOpen,
-  task,
-}: TaskFormProps): JSX.Element => {
+const TaskForm = ({ defaultProgressOrder, type, task }: TaskFormProps): JSX.Element => {
   const [title, setTitle] = useState<string>(task?.title || '')
   const [detail, setDetail] = useState<string>(task?.detail || '')
   const [dueDate, setDueDate] = useState<string>(task?.dueDate || '')
@@ -24,57 +19,59 @@ const TaskForm = ({
   )
 
   const { addTask, editTask } = useTasksAction()
+  const { close } = useMenu({
+    key: type === TASK_MODAL_TYPE.ADD ? MODAL_TYPE.MODAL_ADD : MODAL_TYPE.MODAL_EDIT,
+  })
 
   const handleSubmit = (): void => {
     if (type === TASK_MODAL_TYPE.ADD) {
       // Jalankan function addTask di sini
       addTask(title, detail, dueDate, progressOrder)
-      setIsModalOpen(false)
     }
     if (type === TASK_MODAL_TYPE.EDIT) {
       editTask(task.id, title, detail, dueDate, progressOrder)
-      setIsModalOpen(false)
     }
+    close()
   }
 
   return (
-    <form style={styles.form}>
-      <div style={styles.formItem}>
-        <label>Title：</label>
+    <form className="text-2xl flex flex-col gap-y-4 w-full">
+      <div className="flex flex-col">
+        <label>Title :</label>
         <input
           type="text"
           value={title}
           onChange={(e): void => {
             setTitle(e.target.value)
           }}
-          style={styles.formInput}
+          className="border border-gray-500 h-10 text-xl"
         />
       </div>
-      <div style={styles.formItem}>
-        <label>Detail：</label>
+      <div className="flex flex-col">
+        <label>Detail :</label>
         <textarea
           value={detail}
           onChange={(e): void => {
             setDetail(e.target.value)
           }}
-          style={styles.formTextArea}
+          className="border border-gray-500 h-20 text-xl"
         />
       </div>
-      <div style={styles.formItem}>
-        <label>Due Date：</label>
+      <div className="flex flex-col">
+        <label>Due Date :</label>
         <input
           type="date"
           value={dueDate}
           onChange={(e): void => {
             setDueDate(e.target.value)
           }}
-          style={styles.formInput}
+          className="border border-gray-500 h-10 text-xl"
         />
       </div>
-      <div style={styles.formItem}>
-        <label>Progress：</label>
+      <div className="flex flex-col">
+        <label>Progress :</label>
         <select
-          style={styles.formInput}
+          className="border border-gray-500 h-10 text-xl"
           defaultValue={progressOrder}
           onChange={(e): void => {
             setProgressOrder(Number(e.target.value))
@@ -88,7 +85,7 @@ const TaskForm = ({
       </div>
       <button
         type="button"
-        style={styles.button}
+        className="self-start bg-green-500 text-white text-xl py-3 px-6 rounded"
         onClick={(): void => {
           handleSubmit() // Ditambahkan
         }}
@@ -97,36 +94,6 @@ const TaskForm = ({
       </button>
     </form>
   )
-}
-
-const styles: CSSProperties = {
-  form: {
-    fontSize: '24px',
-  },
-  formItem: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    marginBottom: '16px',
-  },
-  formInput: {
-    height: '40px',
-    fontSize: '20px',
-    border: '1px solid black',
-  },
-  formTextArea: {
-    height: '80px',
-    fontSize: '20px',
-    border: '1px solid black',
-  },
-  button: {
-    backgroundColor: '#55C89F',
-    color: '#fff',
-    fontSize: '20px',
-    padding: '12px 24px',
-    border: 'none',
-    borderRadius: '4px',
-  },
 }
 
 export default TaskForm

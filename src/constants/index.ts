@@ -3,6 +3,7 @@ export const TASK_PROGRESS_STATUS = {
   IN_PROGRESS: 'In Progress',
   WAITING: 'Waiting/In Review',
   COMPLETED: 'Completed',
+  ALL: 'All Task',
 }
 
 export const TASK_PROGRESS_ID = {
@@ -14,6 +15,8 @@ export const TASK_PROGRESS_ID = {
 
 export const AtomKeys = {
   TASKS: 'tasks',
+  MENU: 'menu',
+  TASK: 'task',
 }
 
 export const SelectorKeys = {
@@ -27,4 +30,11 @@ export const SelectorKeys = {
 export const TASK_MODAL_TYPE = {
   ADD: 'add',
   EDIT: 'edit',
+}
+
+export const MODAL_TYPE = {
+  FILTER: 'filter',
+  MENU: 'menu',
+  MODAL_ADD: 'modal_add',
+  MODAL_EDIT: 'modal_edit',
 }

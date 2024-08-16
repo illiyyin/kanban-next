@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import TaskCard from './TaskCard'
 import type { Task, } from '@/types'
 import TaskModal from '../TaskModal'
-import { TASK_MODAL_TYPE } from '@/constants'
+import { MODAL_TYPE, TASK_MODAL_TYPE } from '@/constants'
+import { useMenu } from '@/hooks/useMenu'
 
 interface TaskColumnProps {
   columnTitle: string
@@ -11,16 +12,14 @@ interface TaskColumnProps {
 }
 
 const TaskColumn = ({ columnTitle, tasks, columnId }: TaskColumnProps): JSX.Element => {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const { isMenuOpen: isAddModalOpen, open: openAddModal,setIsMenuOpen } = useMenu({ key: MODAL_TYPE.MODAL_ADD,taskId:columnId })
   return (
     <div className='max-w-[400px]'>
       <div className='flex justify-between items-center p-1'>
         <h2 className='font-bold text-xl'>{columnTitle}</h2>
         <div
           className="material-icons cursor-pointer"
-          onClick={(): void => {
-            setIsModalOpen(true) // Ditambahkan
-          }}
+          onClick={openAddModal}
         >
           add
         </div>
@@ -30,10 +29,9 @@ const TaskColumn = ({ columnTitle, tasks, columnId }: TaskColumnProps): JSX.Elem
           return <TaskCard key={task.id} task={task} />
         })}
       </div>
-      {isModalOpen && (
+      {isAddModalOpen && (
         <TaskModal
           headingTitle="Add your task"
-          setIsModalOpen={setIsModalOpen}
           defaultProgressOrder={columnId}
           type={TASK_MODAL_TYPE.ADD}
         />

@@ -1,6 +1,6 @@
 import { useRecoilState } from 'recoil'
 import type { Task } from '@/types'
-import { tasksState } from '@/features/taskAtoms'
+import { activeFilterState, tasksState } from '@/features/taskAtoms'
 import { TASK_PROGRESS_ID } from '@/constants'
 
 interface useTaskActionType {
@@ -15,10 +15,14 @@ interface useTaskActionType {
     progressOrder: number,
   ) => void
   deleteTask: (id: number) => void
+  changeFilter: (id: number) => void
+  resetFilter: () => void
+  tasks: Task[]
 }
 
 export const useTasksAction = (): useTaskActionType => {
   const [tasks, setTasks] = useRecoilState<Task[]>(tasksState)
+  const [activeFilter, setActiveFilter] = useRecoilState<number | null>(activeFilterState)
 
   const completeTask = (taskId: number): void => {
     const updatedTasks: Task[] = tasks.map((task) =>
@@ -71,11 +75,21 @@ export const useTasksAction = (): useTaskActionType => {
     setTasks((prev) => prev.filter((task) => task.id !== id))
   }
 
+  const changeFilter = (statusNumber: number) => {
+    setActiveFilter(statusNumber)
+  }
+  const resetFilter = () => {
+    setActiveFilter(null)
+  }
+
   return {
     completeTask,
     moveTaskCard,
     addTask,
     editTask,
     deleteTask,
+    tasks: tasks.filter((item) => (activeFilter ? activeFilter === item.progressOrder : true)),
+    changeFilter,
+    resetFilter,
   }
 }

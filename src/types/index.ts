@@ -9,3 +9,9 @@ export interface Task {
   dueDate: string
   progressOrder: number
 }
+
+export interface ActiveMenu {
+  isOpen: boolean
+  key: null | string
+  activeTask: null | number
+}

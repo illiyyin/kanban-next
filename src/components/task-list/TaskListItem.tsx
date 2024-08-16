@@ -1,9 +1,11 @@
-import { TASK_MODAL_TYPE, TASK_PROGRESS_ID, TASK_PROGRESS_STATUS } from '@/constants'
+import { MODAL_TYPE, TASK_MODAL_TYPE, TASK_PROGRESS_ID, TASK_PROGRESS_STATUS } from '@/constants'
 import { useTasksAction } from '@/hooks/useTasksAction'
 import type { Task } from '@/types'
 import React, { useState } from 'react'
 import TaskMenu from '../TaskMenu'
 import TaskModal from '../TaskModal'
+import TaskIcon from '@/components/TaskIcon'
+import { useMenu } from '@/hooks/useMenu'
 
 interface TaskListItemProps {
   task: Task
@@ -25,62 +27,35 @@ const getProgressCategory = (progressOrder: number): string => {
 }
 
 const TaskListItem = ({ task }: TaskListItemProps): JSX.Element => {
-  const { completeTask, deleteTask } = useTasksAction()
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-
-  const IconStyle = () => {
-    const isProgressCompleted = task.progressOrder === TASK_PROGRESS_ID.COMPLETED
-
-    return (
-      <span
-        className={`material-icons mr-4 text-3xl ${isProgressCompleted ? 'text-green-500 cursor-default' : 'text-gray-400 cursor-pointer'}`}
-        onClick={(): void => {
-          completeTask(task.id) // Ditambahkan
-        }}
-      >
-        check_circle
-      </span>
-    )
-  }
+  const { deleteTask } = useTasksAction()
+  const { isMenuOpen: isMenuOpen, open } = useMenu({ key: MODAL_TYPE.MENU, taskId: task.id })
+  const { isMenuOpen: isEditMenuOpen } = useMenu({
+    key: MODAL_TYPE.MODAL_EDIT,
+    taskId: task.id,
+  })
+  // const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  // console.log(isEditMenuOpen, task.id)
 
   return (
-    <div className="flex items-stretch border-b border-b-gray-300 text-xl relative *:p-4 *:flex *:items-center  *:border-r-gray-300">
-      <div className="w-1/4 border-r">
-        <IconStyle />
+    <div className="flex items-stretch border-b border-b-gray-300 text-xl relative ">
+      <div className="w-1/4 border-r p-4 flex items-center  border-r-gray-300">
+        <TaskIcon task={task} />
         {task.title}
       </div>
-      <div className="w-[30%] border-r">{task.detail}</div>
-      <div className="w-1/5 border-r">{task.dueDate}</div>
+      <div className="w-[30%] border-r p-4 flex items-center  border-r-gray-300">{task.detail}</div>
+      <div className="w-1/5 border-r p-4 flex items-center  border-r-gray-300">{task.dueDate}</div>
       {/* Ditambahkan */}
-      <div className="w-[15%] border-r-0">{getProgressCategory(task.progressOrder)}</div>
-      <div>
-        <span
-          className="material-icons"
-          onClick={(): void => {
-            setIsMenuOpen(true) // Ditambahkan
-          }}
-        >
+      <div className="w-[15%] border-r-0 p-4 flex items-center  border-r-gray-300">
+        {getProgressCategory(task.progressOrder)}
+      </div>
+      <div className="relative flex items-center">
+        <span className="material-icons cursor-pointer" onClick={open}>
           more_horiz
         </span>
+        {isMenuOpen && <TaskMenu taskId={task.id} />}
       </div>
-      {isMenuOpen && (
-        <TaskMenu
-          setIsMenuOpen={setIsMenuOpen}
-          setIsModalOpen={setIsModalOpen}
-          deleteTask={() => {
-            deleteTask(task.id)
-            setIsMenuOpen(false)
-          }}
-        />
-      )}
-      {isModalOpen && (
-        <TaskModal
-          headingTitle="Edit your task"
-          setIsModalOpen={setIsModalOpen}
-          task={task}
-          type={TASK_MODAL_TYPE.EDIT}
-        />
+      {isEditMenuOpen && (
+        <TaskModal headingTitle="Edit your task" task={task} type={TASK_MODAL_TYPE.EDIT} />
       )}
     </div>
   )

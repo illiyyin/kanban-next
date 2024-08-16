@@ -1,45 +1,34 @@
 import React, { useState } from 'react'
 import type { Task } from '@/types'
-import { TASK_MODAL_TYPE, TASK_PROGRESS_ID } from '@/constants'
+import { MODAL_TYPE, TASK_MODAL_TYPE, TASK_PROGRESS_ID } from '@/constants'
 import { useTasksAction } from '@/hooks/useTasksAction'
 import TaskMenu from '../TaskMenu'
 import TaskModal from '../TaskModal'
+import TaskIcon from '@/components/TaskIcon'
+import { useMenu } from '@/hooks/useMenu'
 
 interface TaskCardProps {
   task: Task
 }
 
 const TaskCard = ({ task }: TaskCardProps): JSX.Element => {
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-  const { completeTask, moveTaskCard, deleteTask } = useTasksAction()
+  const { isMenuOpen: isMenuOpen, open } = useMenu({ key: MODAL_TYPE.MENU, taskId: task.id })
+  const { isMenuOpen: isEditMenuOpen } = useMenu({
+    key: MODAL_TYPE.MODAL_EDIT,
+    taskId: task.id,
+  })
+  const { moveTaskCard, deleteTask } = useTasksAction()
 
   const isStarted = task.progressOrder === TASK_PROGRESS_ID.NOT_STARTED
 
-  const IconStyle = () => {
-    const isProgressCompleted = task.progressOrder === TASK_PROGRESS_ID.COMPLETED
-
-    return (
-      <span
-        className={`material-icons mr-4 text-3xl ${isProgressCompleted ? 'text-green-500 cursor-default' : 'text-gray-400 cursor-pointer'}`}
-        onClick={(): void => {
-          completeTask(task.id) // Ditambahkan
-        }}
-      >
-        check_circle
-      </span>
-    )
-  }
-
   return (
-    <div className="bg-green-200 p-6 rounded-xl my-2 flex flex-col gap-y-2 text-xl">
+    <div className="bg-green-200 p-6 rounded-xl my-2 flex flex-col gap-y-2 text-xl relative">
       <div className="flex justify-between">
-        <IconStyle />
+        <TaskIcon task={task} />
+        {/* <div className="material-icons">check_circle</div> */}
         <div
           className="material-icons cursor-pointer"
-          onClick={(): void => {
-            setIsMenuOpen(true) // Ditambahkan
-          }}
+          onClick={open}
         >
           more_vert
         </div>
@@ -75,18 +64,12 @@ const TaskCard = ({ task }: TaskCardProps): JSX.Element => {
       </div>
       {isMenuOpen && (
         <TaskMenu
-          setIsMenuOpen={setIsMenuOpen}
-          setIsModalOpen={setIsModalOpen}
-          deleteTask={() => {
-            deleteTask(task.id)
-            setIsMenuOpen(false)
-          }}
+          taskId={task.id}
         />
       )}
-      {isModalOpen && (
+      {isEditMenuOpen && (
         <TaskModal
           headingTitle="Edit your task"
-          setIsModalOpen={setIsModalOpen}
           task={task}
           type={TASK_MODAL_TYPE.EDIT}
         />

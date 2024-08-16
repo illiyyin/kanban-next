@@ -1,65 +1,34 @@
-import React, { useState } from 'react'
-import type { Dispatch, SetStateAction } from 'react'
-import type { CSSProperties, Task } from '@/types'
-import TaskModal from './TaskModal'
-import { TASK_MODAL_TYPE } from '@/constants'
+import { MODAL_TYPE, TASK_MODAL_TYPE } from '@/constants'
+import { useMenu } from '@/hooks/useMenu'
 import { useTasksAction } from '@/hooks/useTasksAction'
+import type { Dispatch, SetStateAction } from 'react'
 
 interface TaskMenuProps {
-  setIsMenuOpen: Dispatch<SetStateAction<boolean>>
-  setIsModalOpen: Dispatch<SetStateAction<boolean>>
-  deleteTask: () => void
+  taskId: number
 }
 
-const TaskMenu = ({ setIsMenuOpen, setIsModalOpen, deleteTask }: TaskMenuProps): JSX.Element => {
+const TaskMenu = ({ taskId }: TaskMenuProps): JSX.Element => {
+  const { deleteTask } = useTasksAction()
+  const { open, close } = useMenu({ key: MODAL_TYPE.MODAL_EDIT, taskId })
   return (
-    <div style={styles.menu}>
+    <div className="absolute flex flex-col bg-white right-4 top-4 py-2 px-4 border border-gray-500 gap-y-2">
       <div
-        style={styles.menuItem}
-        onClick={() => {
-          setIsModalOpen(true)
-          setIsMenuOpen(false)
-        }}
+        className="flex items-center cursor-pointer gap-x-1"
+        onClick={open}
       >
         <span className="material-icons">edit</span>Edit
       </div>
-      <div style={styles.menuItem} onClick={deleteTask}>
+      <div className="flex items-center cursor-pointer gap-x-1" onClick={() => {
+        deleteTask(taskId)
+        close()
+      }}>
         <span className="material-icons">delete</span>Delete
       </div>
-      <span
-        className="material-icons"
-        style={styles.closeIcon}
-        onClick={(): void => {
-          setIsMenuOpen(false)
-        }}
-      >
+      <span className="material-icons absolute top-1 right-1 cursor-pointer" onClick={close}>
         close
       </span>
     </div>
   )
-}
-
-const styles: CSSProperties = {
-  menu: {
-    backgroundColor: '#fff',
-    border: '1px solid gray',
-    padding: '8px 16px',
-    position: 'absolute',
-    top: '-10px',
-    right: '4%',
-    zIndex: 10,
-  },
-  menuItem: {
-    display: 'flex',
-    marginBottom: '8px',
-    cursor: 'pointer',
-  },
-  closeIcon: {
-    position: 'absolute',
-    top: '0px',
-    right: '2px',
-    cursor: 'pointer',
-  },
 }
 
 export default TaskMenu

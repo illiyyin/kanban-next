@@ -49,3 +49,8 @@ export const tasksState = atom<Task[]>({
     },
   ],
 })
+
+export const activeFilterState = atom<number | null>({
+  key:AtomKeys.TASK,
+  default:null
+})
