@@ -12,25 +12,30 @@ const FilterTaskMenu = (): JSX.Element => {
     close()
   }
   return (
-    <div className="absolute flex flex-col bg-white right-4 top-4 py-2 px-4 border border-gray-500 gap-y-2">
-      <div
-        className="flex items-center cursor-pointer gap-x-1 text-black"
-        onClick={() => handleChangeFilter(TASK_PROGRESS_ID.COMPLETED)}
-      >
-        {TASK_PROGRESS_STATUS.COMPLETED}
+    <div className="absolute flex bg-white left-4 top-4 py-2 px-4 border border-gray-500 gap-y-2 w-[200px]">
+      <div className='flex flex-col relative w-full'>
+        <div
+          className="flex items-center cursor-pointer gap-x-1 text-black"
+          onClick={() => handleChangeFilter(TASK_PROGRESS_ID.COMPLETED)}
+        >
+          {TASK_PROGRESS_STATUS.COMPLETED}
+        </div>
+        <div
+          className="flex items-center cursor-pointer gap-x-1 text-black"
+          onClick={() => handleChangeFilter(TASK_PROGRESS_ID.IN_PROGRESS)}
+        >
+          {TASK_PROGRESS_STATUS.IN_PROGRESS}
+        </div>
+        <div className="flex items-center cursor-pointer gap-x-1 text-black" onClick={() => {
+          resetFilter()
+          close()
+        }}>
+          {TASK_PROGRESS_STATUS.ALL}
+        </div>
+        <span className="material-icons absolute top-1 right-1 cursor-pointer" onClick={close}>
+          close
+        </span>
       </div>
-      <div
-        className="flex items-center cursor-pointer gap-x-1 text-black"
-        onClick={() => handleChangeFilter(TASK_PROGRESS_ID.IN_PROGRESS)}
-      >
-        {TASK_PROGRESS_STATUS.IN_PROGRESS}
-      </div>
-      <div className="flex items-center cursor-pointer gap-x-1 text-black" onClick={resetFilter}>
-        {TASK_PROGRESS_STATUS.ALL}
-      </div>
-      <span className="material-icons absolute top-1 right-1 cursor-pointer" onClick={close}>
-        close
-      </span>
     </div>
   )
 }

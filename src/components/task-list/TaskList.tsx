@@ -25,13 +25,15 @@ const TaskList = (): JSX.Element => {
         >
           <span className="material-icons">add</span>Add task
         </button>
-        <button
-          className="p-4 flex items-center bg-cyan-500 text-white gap-x-2 relative"
-          onClick={openFilter}
-        >
-          <span className="material-icons">sort</span>Filter tasks
+        <div className='relative'>
+          <button
+            className="p-4 flex items-center bg-cyan-500 text-white gap-x-2"
+            onClick={openFilter}
+          >
+            <span className="material-icons">sort</span>Filter tasks
+          </button>
           {isFilterMenuOpen && <FilterTaskMenu />}
-        </button>
+        </div>
       </div>
       <div>
         <div className="flex text-2xl border-b border-b-gray-300 *:p-4">
