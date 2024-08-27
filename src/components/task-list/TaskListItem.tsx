@@ -1,7 +1,5 @@
 import { MODAL_TYPE, TASK_MODAL_TYPE, TASK_PROGRESS_ID, TASK_PROGRESS_STATUS } from '@/constants'
-import { useTasksAction } from '@/hooks/useTasksAction'
 import type { Task } from '@/types'
-import React, { useState } from 'react'
 import TaskMenu from '../TaskMenu'
 import TaskModal from '../TaskModal'
 import TaskIcon from '@/components/TaskIcon'
@@ -27,17 +25,16 @@ const getProgressCategory = (progressOrder: number): string => {
 }
 
 const TaskListItem = ({ task }: TaskListItemProps): JSX.Element => {
-  const { deleteTask } = useTasksAction()
   const { isMenuOpen: isMenuOpen, open } = useMenu({ key: MODAL_TYPE.MENU, taskId: task.id })
   const { isMenuOpen: isEditMenuOpen } = useMenu({
     key: MODAL_TYPE.MODAL_EDIT,
     taskId: task.id,
   })
-  // const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-  // console.log(isEditMenuOpen, task.id)
 
   return (
-    <div className="flex items-stretch border-b border-b-gray-300 text-xl relative ">
+    <div
+      className="flex items-stretch border-b border-b-gray-300 text-xl relative"
+      data-testid="task-list-item">
       <div className="w-1/4 border-r p-4 flex items-center  border-r-gray-300">
         <TaskIcon task={task} />
         {task.title}

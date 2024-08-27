@@ -1,8 +1,5 @@
 'use client'
-import { tasksState } from '@/features/taskAtoms'
 import type { Task } from '@/types'
-import React, { useState } from 'react'
-import { useRecoilValue } from 'recoil'
 import TaskListItem from './TaskListItem'
 import TaskModal from '../TaskModal'
 import { MODAL_TYPE, TASK_MODAL_TYPE, TASK_PROGRESS_ID } from '@/constants'
