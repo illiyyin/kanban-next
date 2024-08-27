@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react'
+import React, { useState } from 'react'
 import { MODAL_TYPE, TASK_MODAL_TYPE, TASK_PROGRESS_ID, TASK_PROGRESS_STATUS } from '@/constants'
 import type { Task } from '@/types'
 import { useTasksAction } from '@/hooks/useTasksAction'
@@ -44,6 +44,7 @@ const TaskForm = ({ defaultProgressOrder, type, task }: TaskFormProps): JSX.Elem
           onChange={(e): void => {
             setTitle(e.target.value)
           }}
+          data-testid="input-title"
           className="border border-gray-500 h-10 text-xl"
         />
       </div>
@@ -54,6 +55,7 @@ const TaskForm = ({ defaultProgressOrder, type, task }: TaskFormProps): JSX.Elem
           onChange={(e): void => {
             setDetail(e.target.value)
           }}
+          data-testid="input-detail"
           className="border border-gray-500 h-20 text-xl"
         />
       </div>
@@ -65,6 +67,7 @@ const TaskForm = ({ defaultProgressOrder, type, task }: TaskFormProps): JSX.Elem
           onChange={(e): void => {
             setDueDate(e.target.value)
           }}
+          data-testid="input-dueDate"
           className="border border-gray-500 h-10 text-xl"
         />
       </div>
@@ -76,6 +79,7 @@ const TaskForm = ({ defaultProgressOrder, type, task }: TaskFormProps): JSX.Elem
           onChange={(e): void => {
             setProgressOrder(Number(e.target.value))
           }}
+          data-testid="input-progressOrder"
         >
           <option value={TASK_PROGRESS_ID.NOT_STARTED}>{TASK_PROGRESS_STATUS.NOT_STARTED}</option>
           <option value={TASK_PROGRESS_ID.IN_PROGRESS}>{TASK_PROGRESS_STATUS.IN_PROGRESS}</option>
@@ -89,6 +93,7 @@ const TaskForm = ({ defaultProgressOrder, type, task }: TaskFormProps): JSX.Elem
         onClick={(): void => {
           handleSubmit() // Ditambahkan
         }}
+        data-testid="submit-modal-button"
       >
         Submit
       </button>

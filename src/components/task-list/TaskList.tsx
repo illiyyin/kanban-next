@@ -19,6 +19,7 @@ const TaskList = (): JSX.Element => {
         <button
           className="p-4 flex items-center bg-cyan-500 text-white gap-x-2 relative"
           onClick={openAddModal}
+          data-testid="add-modal-button"
         >
           <span className="material-icons">add</span>Add task
         </button>
