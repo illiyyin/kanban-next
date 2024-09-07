@@ -1,7 +1,6 @@
-import { MODAL_TYPE, TASK_MODAL_TYPE } from '@/constants'
+import { MODAL_TYPE } from '@/constants'
 import { useMenu } from '@/hooks/useMenu'
 import { useTasksAction } from '@/hooks/useTasksAction'
-import type { Dispatch, SetStateAction } from 'react'
 
 interface TaskMenuProps {
   taskId: number

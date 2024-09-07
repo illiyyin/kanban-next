@@ -1,7 +1,6 @@
 import { MODAL_TYPE, TASK_PROGRESS_ID, TASK_PROGRESS_STATUS } from '@/constants'
 import { useMenu } from '@/hooks/useMenu'
 import { useTasksAction } from '@/hooks/useTasksAction'
-import type { Dispatch, SetStateAction } from 'react'
 
 const FilterTaskMenu = (): JSX.Element => {
   const { changeFilter, resetFilter } = useTasksAction()

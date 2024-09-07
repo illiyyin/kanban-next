@@ -1,9 +1,7 @@
 import { activeMenuState } from '@/features/menuAtoms'
-import { useState } from 'react'
 import { useRecoilState } from 'recoil'
 
 export const useMenu = ({ key, taskId }: { key: string; taskId?: number }) => {
-  // const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
   const [menuState, setMenuState] = useRecoilState(activeMenuState)
 
   const setIsMenuOpen = (status: boolean) => {
