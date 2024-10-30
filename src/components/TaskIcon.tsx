@@ -16,6 +16,7 @@ const TaskIcon = ({ task }: TaskIconProps) => {
       onClick={(): void => {
         completeTask(task.id) // Ditambahkan
       }}
+      data-testid={isProgressCompleted ?? "task_completed"}
     >
       check_circle
     </span>

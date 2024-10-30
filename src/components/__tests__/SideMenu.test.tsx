@@ -15,7 +15,6 @@ describe('SideMenu', () => {
   it('renders menu Home and redirect to the Home Page', () => {
     const menuLink = screen.getByText("Home")
     expect(menuLink).toBeInTheDocument()
-    expect(menuLink).toBeRequired
 
     fireEvent.click(menuLink);
     expect(mockRouter.asPath).toEqual('/')
