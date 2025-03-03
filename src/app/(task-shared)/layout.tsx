@@ -1,7 +1,7 @@
 import { Inter } from 'next/font/google'
 import '@/app/globals.css'
-import SideMenu from '@/components/SideMenu'
 import RecoilProvider from '@/components/RecoilProvider'
+import SideMenu from '@/components/SideMenu'
 
 const inter = Inter({ subsets: ['latin'] })
 
