@@ -31,8 +31,8 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Configure Next.js for Static Export
-        run: echo 'module.exports = { output: "export" }' > next.config.js
+      - name: Verify Next.js Config (Ensure `.mjs` is Used)
+        run: cat next.config.mjs
 
       - name: Build Static Site
         run: npm run build && npm run export
@@ -40,7 +40,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out  # This is where Next.js static export is stored
+          path: ./out  # Next.js static output
 
   deploy:
     environment:
@@ -51,4 +51,3 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
