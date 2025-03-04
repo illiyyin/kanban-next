@@ -35,7 +35,7 @@ jobs:
         run: cat next.config.mjs  # This ensures the file exists and is used
 
       - name: Build Static Site
-        run: npm run build && npm run export
+        run: npm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
