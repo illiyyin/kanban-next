@@ -11,7 +11,7 @@ const TaskSummary = (): JSX.Element => {
 
   return (
     <div className="w-full p-10">
-      <h1 className="text-green-500 mb-16 font-bold text-3xl">Test github action Summary of Your Tasks</h1>
+      <h1 className="text-green-500 mb-16 font-bold text-3xl">Test github action 2 Summary of Your Tasks</h1>
       {/* Diperbarui */}
       <div className='text-white bg-green-500 flex items-center justify-center mb-10 p-4 gap-x-2'>
         <span className="material-icons">check_circle</span>
